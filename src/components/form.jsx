@@ -1,30 +1,51 @@
 import React from "react";
 
 class Form extends React.Component {
-  state = { toDoText: "" };
-  handleChange = event => {
-    event.preventDefault();
+  state = { name: "", number: 0 };
 
+  handleTextChange = event => {
+    event.preventDefault();
     const { value } = event.target;
-    this.setState({ toDoText: value });
+
+    this.setState({ name: value });
   };
+
+  handleNumberChange = event => {
+    event.preventDefault();
+    const { value } = event.target;
+    this.setState({ number: value });
+  };
+
   render() {
     return (
       <form>
         <label>
           To Do :
           <input
-            onChange={this.handleChange}
+            onChange={this.handleTextChange}
             type="text"
             name="toDoText"
           ></input>
         </label>
+        <label>
+          To Do :
+          <input
+            onChange={this.handleNumberChange}
+            type="number"
+            name="toDoNumber"
+          ></input>
+        </label>
         <button
-          onClick={() => {
-            this.props.handleSubmit("heleo");
+          type="submit"
+          onClick={event => {
+            event.preventDefault();
+            this.props.handleSubmit(this.state);
           }}
         >
           Submit
+        </button>
+        <button type="button" onClick={this.props.saveData}>
+          Save
         </button>
       </form>
     );

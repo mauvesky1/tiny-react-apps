@@ -13,10 +13,13 @@ class App extends React.Component {
       { name: "XYZ", number: 3 }
     ]
   };
+  saveData = () => {
+    localStorage.setItem("data", JSON.stringify(this.state));
+  };
+
   sorter = () => {
     this.setState(function(currentState) {
       const newList = [...currentState.listItems];
-      console.log(newList, "asfasf");
       return {
         listItems: newList.sort(function(a, b) {
           if (a.name > b.name) {
@@ -32,15 +35,26 @@ class App extends React.Component {
     return;
   };
 
-  handleSubmit = event => {
-    console.log("this is the console.log", event);
+  handleSubmit = string => {
+    this.setState(currentState => {
+      return {
+        listItems: [...currentState.listItems, string]
+      };
+    });
   };
+
+  componentDidMount() {
+    const data = localStorage.getItem("data");
+    if (data) {
+      this.setState(JSON.parse(data));
+    }
+  }
 
   render() {
     return (
       <div>
         <Header />
-        <Form handleSubmit={this.handleSubmit} />
+        <Form handleSubmit={this.handleSubmit} saveData={this.saveData} />
         <CheckList listItems={this.state.listItems} />
         <SortButton sorter={this.sorter} />
       </div>
