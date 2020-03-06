@@ -28,7 +28,7 @@ class Form extends React.Component {
           ></input>
         </label>
         <label>
-          To Do :
+          Urgency Level:
           <input
             onChange={this.handleNumberChange}
             type="number"
